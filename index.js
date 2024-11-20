@@ -35,11 +35,20 @@ const animate = () => {
     requestAnimationFrame(animate);
 }
 
+const point = {
+    x: canvas.width / 2,
+    y: canvas.height / 2
+}
+
+let degree = 0;
 
 const generateAtoms = () => {
-    atoms.push(new Atom (Math.random() * canvas.width , Math.random() * canvas.height, ctx));
+    atoms.push(new Atom (canvas.width / 2 + (point.x * 200), canvas.height / 2 + (point.y * 200), ctx));
+    point.x = Math.cos(degreeToRadian(degree))
+    point.y = point.x * point.x
+
+    degree++;
     requestAnimationFrame(generateAtoms);
-    console.log(atoms)
 }
 
 animate();
