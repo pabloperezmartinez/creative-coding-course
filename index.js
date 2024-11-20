@@ -16,15 +16,10 @@ const degreeToRadian = (degrees) => {
 }
 
 let atoms = [];
-canvas.addEventListener('mousemove', function(e) {
-    for (let i = 0; i < 20; i++) {
-        atoms.push(new Atom(e.x, e.y));
-        console.log("Hola");
-    }
-})
 
 const animate = () => {
     atoms.forEach((atom, index) => {
+        ctx.fillStyle = 'white';
         atom.draw();
         atom.updateSpeed();
         atom.updateSize();
@@ -33,7 +28,7 @@ const animate = () => {
         }
     })
     ctx.save();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(0,0, canvas.width, canvas.height);
     ctx.restore();
     requestAnimationFrame(animate);
@@ -43,7 +38,7 @@ class Atom {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.radius = Math.random() * 8 + 2;
+        this.radius = Math.random() * 2 + 2;
         this.speedX = Math.random() * 4 - 2;
         this.speedY = Math.random() * 4 - 2;
     }
@@ -64,28 +59,11 @@ class Atom {
     }
 }
 
+const generateAtoms = () => {
+    atoms.push(new Atom (Math.random() * canvas.width , Math.random() * canvas.height ));
+    requestAnimationFrame(generateAtoms);
+    console.log(atoms)
+}
 
 animate();
-
-//Dibujar círculos
-// ctx.beginPath()
-// ctx.arc(300, 300, 200, degreeToRadian(0), degreeToRadian(360))
-// ctx.fill()
-
-
-/**
- * Single brush
- */
-/*
-canvas.addEventListener('mousemove', (e) => {
-    console.log(e.x, e.y);
-    ctx.rect(e.x, e.y, 100, 100);
-    ctx.fill();
-})
-/*
-ctx.beginPath();
-ctx.rect(100, 100, 100, 100)
-// ctx.fill()
-ctx.stroke()
-*/
-
+generateAtoms();
